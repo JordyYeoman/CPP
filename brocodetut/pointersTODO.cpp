@@ -48,7 +48,7 @@ int main() {
 
     uint8_t onMessageTest[100] = {'[',',','{','"','m','e','s','s','a','g','e','"',':','"','o','n','"','}',']'};
     size_t length3 = sizeof(myPayload)/sizeof(myPayload[0]);
-
+    
     std::cout << "PAYLOAD: " << myPayload << std::endl;
     std::cout << "SIZE OF PAYLOAD: " << sizeof(myPayload) << std::endl;
     std::cout << "SIZE OF PAYLOAD: " << length << std::endl;
@@ -63,24 +63,24 @@ int main() {
     std::string str;
     std::string on = "on";
     std::string off = "off";
-    for(int i = 0; i <= 100; i++) {
-        if(i % 2 == 0) { // If a number is evenly divisible by 2 with no remainder, then it is even
-            str = getMessage(onMessageTest, length3);
-        } else {
-            str = getMessage(offMessageTest, length2);
-        }
-        // Respond to message
-        if(str.compare(on) == 0){
-            // Turn onboard led on
-            // digitalWrite(2, HIGH);
-            std::cout << "Turning on LED \n";
-        }
-        if(str.compare(off) == 0) {
-            // Turn onboard led off
-            // digitalWrite(2, LOW);
-            std::cout << "Turning off LED \n";
-        }
-    }
+    // for(int i = 0; i <= 100; i++) {
+    //     if(i % 2 == 0) { // If a number is evenly divisible by 2 with no remainder, then it is even
+    //         str = getMessage(onMessageTest, length3);
+    //     } else {
+    //         str = getMessage(offMessageTest, length2);
+    //     }
+    //     // Respond to message
+    //     if(str.compare(on) == 0){
+    //         // Turn onboard led on
+    //         // digitalWrite(2, HIGH);
+    //         std::cout << "Turning on LED \n";
+    //     }
+    //     if(str.compare(off) == 0) {
+    //         // Turn onboard led off
+    //         // digitalWrite(2, LOW);
+    //         std::cout << "Turning off LED \n";
+    //     }
+    // }
 
     // uint8_t highScore = 0;
     // uint8_t * highScorePointer;
@@ -106,10 +106,9 @@ std::string getMessage(uint8_t * payload, size_t length) {
             startOfMsgIndex = i + 2; continue; // Plus 2 since the message is ' :"testMsg" '
         }
         if(i == startOfMsgIndex) {
-            if((char)payload[i] != '\"'){
-                message += payload[i];
-                startOfMsgIndex += 1;
-            }
+            if((char)payload[i] == '\"') break;
+            message += payload[i];
+            startOfMsgIndex += 1;
         }
     }
     std::cout << "FINAL MESSAGE: " << message << std::endl;
