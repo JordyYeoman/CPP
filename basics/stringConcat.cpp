@@ -20,6 +20,8 @@ int main() {
         std::cout << "Random Number Array: " << data.size() << std::endl;
         for(int j = 0; j < data.size(); j++){
             std::cout << data[j];
+            // Below is good to know for arduino -> getting the underlying c_str value
+            std::cout << data[j].c_str() << std::endl;
         }
         std::cout << std::endl;
         data = {};
