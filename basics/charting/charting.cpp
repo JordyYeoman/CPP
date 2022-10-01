@@ -1,13 +1,45 @@
 #include <iostream>
+#include <fstream>
 #include "LowPassFilter.hpp"
 using namespace std;
 
-int main(int argc, char** argv){
-	//Create a low pass filter with 1 * 2 * pi Hz cuttoff freqency. DetltaTime for each cycle equals 0.01 seonds
-	LowPassFilter lpf(1.0, 0.01);
-	//Cycles 500 times. With the lpf deltaTime set to 0.01 it will simulate 5 seconds of run time
-	for(int i = 0; i < 500; i++){
-		cout << lpf.update(1.0) << endl; //Update with 1.0 as input value.
+void addTerminalSpacing(int start) {
+	if(start == 0) {
+		cout << " " << endl;
+		cout << " " << endl;
+		cout << "-------------- ITS GO TIME --------------" << endl;	
 	}
+	cout << " " << endl;
+	cout << " " << endl;
+	cout << " " << endl;
+	cout << " " << endl;
+	if(start == 1) {
+		cout << "-------------- SYSTEM TERMINATED --------------" << endl;	
+		cout << " " << endl;
+		cout << " " << endl;
+	}
+}
+
+int main(){
+	string fileReadLine;
+	ifstream fileToRead ("data0.txt");
+	int cutOffFreq = 1900;
+	double deltaTime = 0.1;
+
+	addTerminalSpacing(0);
+	cout << "Systems Online" << endl;
+	if (fileToRead.is_open()) {
+		LowPassFilter lpf(cutOffFreq, deltaTime);
+		cout << "File is open" << endl;
+		while ( getline(fileToRead,fileReadLine, ',') ) {
+			// float val = stof(fileReadLine);
+			// cout << lpf.update(val) << '\n';
+		}
+		fileToRead.close();
+	} else {
+		cout << "File does not exist or cannot be found." << endl;
+	}
+	addTerminalSpacing(1);
+
 	return 1;
 }
