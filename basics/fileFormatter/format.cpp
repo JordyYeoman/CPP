@@ -3,37 +3,56 @@
 #include <string>
 #include <vector>
 
-std::vector<int> readFile() {
+std::string removeWhiteSpace(std::string s) {
+    // using the erase, remove_if, bind, and std::isspace functions
+    s.erase(std::remove_if(s.begin(), s.end(), std::bind(std::isspace<char>, std::placeholders::_1, std::locale::classic())),s.end());
+    return s;
+}
+
+void readAndWriteFile() {
   std::string line;
-  std::string fileName;
-  std::ifstream myfile;
-  std::vector<int> data;
+  std::string inputFileName;
+  std::string outputFileName;
+  std::ofstream outputFile;
+  std::ifstream inputFile;
+  int count = 0;
+  int loopSize = 500;
 
   std::cout << "Enter file name to format: ";
-  std::cin >> fileName;
+  std::cin >> inputFileName;
+  std::cout << "Enter output file name: ";
+  std::cin >> outputFileName;
 
-  myfile = std::ifstream (fileName);
+  inputFile = std::ifstream (inputFileName);
+  outputFile = std::ofstream(outputFileName);
 
-  if (myfile.is_open())
+  if (inputFile.is_open())
   {
-    while ( getline (myfile,line) )
-    {
-    //   std::cout << line << '\n';
-        data.push_back(stoi(line));
+    std::string str;
+    while ( getline (inputFile,line, '\n') )
+    {   
+        if(outputFile.is_open()){
+            if(count == loopSize) {
+                outputFile << str << "\n";
+                str.clear();
+                count = 0;
+            } else {
+                str.append(removeWhiteSpace(line.c_str()) + ',');
+                count++;
+            }
+        }
     }
-    myfile.close();
+    inputFile.close();
+    outputFile.close();
   } else {
     std::cout << "Unable to open file" << std::endl;
-    std::cout << "Check file exist file name: " << fileName << std::endl;
+    std::cout << "Check file exist, file name: " << inputFileName << std::endl;
   }
-
-  return data;
 }
 
 int main() {
     std::cout << "Systems online and ready sir" << std::endl;
-    std::vector<int> x = readFile();
-    std::cout << "Send it: " << x << std::endl;
+    readAndWriteFile();
 
 
 
