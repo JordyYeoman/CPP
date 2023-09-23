@@ -2,6 +2,7 @@
 
 int main() {
     std::string bikiniBottom[] = {"Spongebob", "Sandy", "Squidward", "Mr Krabs", "Sandy"};
+    std::string locations[] = {"Rock", "Pineapple Home", "Fishbowl", "Krusty Krab"}
     char grades[] = {'A', 'B', 'C', 'D', 'E', 'F'};
 
     // Loop over all of the grades and print them out
