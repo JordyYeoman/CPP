@@ -20,10 +20,16 @@ int main()
     // Iterate through the map and print the elements
     while (it != mp.end())
     {
+
+        if (it->first == "two")
+        {
+            std::cout << "Second Key!!\n";
+        }
+
         // Remember this won't log first, because we cannot guarantee the map order as we iterate.
         if (it->first == "one")
         {
-            std::cout << "First key!!";
+            std::cout << "First key!!\n";
         }
 
         std::cout << "Key: " << it->first
